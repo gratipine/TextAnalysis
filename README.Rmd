@@ -1,0 +1,15 @@
+#### Tutorials
+
+This project will be used for keeping together all work I do as I start coing to 
+terms with text analysis. The main notebook I will be using is 
+[the textbook written by Silge and Robinson](https://www.tidytextmining.com/preface.html).
+
+```{R}
+# Install the necessary libraries
+
+install.packages("tidytext")
+install.packages("broom")
+
+```
+
+- [Code](https://github.com/dgrtwo/tidy-text-mining)
