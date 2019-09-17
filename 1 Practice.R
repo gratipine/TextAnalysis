@@ -79,4 +79,10 @@ ggplot(frequencies,
 
 # Nothing jogs my memory, but I was wrong about "chapter" not mattering that 
 # much - it is right in the middle and very common for both books, even though 
-# it should not be that common. 
+# it should not be that common.
+
+# Correlations between the two sets 
+cor.test(data = frequencies,
+         ~ proportion + `The Secret Adversary`)
+
+# Not very strong correlation...
