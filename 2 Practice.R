@@ -65,3 +65,38 @@ library(ggplot2)
 ggplot(sentiments_in_agatha, aes(index, sentiment, fill = gutenberg_id)) +
   geom_col(show.legend = FALSE) +
   facet_wrap(~gutenberg_id, ncol = 2, scales = "free_x")
+
+
+# Comparing the three dictionaries using plot of P&P -----------
+styles_affair <- tidy_books %>% 
+  filter(gutenberg_id == 863)
+
+afinn <- styles_affair %>% 
+  inner_join(get_sentiments("afinn")) %>% 
+  group_by(index = linenumber %/% 80) %>% 
+  summarise(sentiment = sum(value)) %>% 
+  mutate(method = "AFINN")
+
+bing_and_nrc <- bind_rows(
+  styles_affair %>% 
+    inner_join(get_sentiments("bing")) %>%
+    mutate(method = "Bing et al."),
+  styles_affair %>% 
+    inner_join(get_sentiments("nrc") %>% 
+                 filter(sentiment %in% c("positive", 
+                                         "negative"))) %>%
+    mutate(method = "NRC")) %>%
+  count(method, index = linenumber %/% 80, sentiment) %>%
+  spread(sentiment, n, fill = 0) %>%
+  mutate(sentiment = positive - negative)
+
+# Visualize
+bind_rows(afinn, 
+          bing_and_nrc) %>%
+  ggplot(aes(index, sentiment, fill = method)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~method, ncol = 1, scales = "free_y")
+
+# The three methods seem to agree over here as well - wit the expected 
+# exception that the NRC is more positive than the rest of them
+
