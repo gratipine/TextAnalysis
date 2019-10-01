@@ -112,20 +112,10 @@ book_words %>%
 # We do have some words in the Tommu and Tuppence book that we shouldn't have
 # Some clean up required
 
-library(stringr)
-books %>%
-  filter(str_detect(text, "that's")) %>%
-  select(text)
+# Fast fix for the encoding problem
+book_words <- book_words[-grep(
+  "dat2", iconv(book_words$word, "latin1", "ASCII", sub="dat2")),]
 
-book_words[book_words$word == "don't",]
-
-mystop_words <- tibble(word = c("it's", "don't", "that's", "i've", "you're"))
-
-book_words <- anti_join(book_words, mystop_words, by = "word")
-
-often <- book_words %>% arrange(desc(tf_idf))
-
-merge(often, mystop_words, by = "word")
 
 book_words %>%
   arrange(desc(tf_idf)) %>%
@@ -138,3 +128,8 @@ book_words %>%
   labs(x = NULL, y = "tf-idf") +
   facet_wrap(~gutenberg_id, ncol = 2, scales = "free") +
   coord_flip()
+
+# We still talk about mostly names, which is good. Surprising amount of taxis in 
+# the Tommy and Tuppence book as opposed to the Poirot one, but given how he 
+# likes to sit tight and let the little gray cells do their job, perhaps not 
+# that surprising.
