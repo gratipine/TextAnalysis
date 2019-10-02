@@ -2,6 +2,7 @@ library(dplyr)
 library(tidytext)
 library(janeaustenr)
 library(tidyr)
+library(ggplot2)
 
 austen_bigrams <- austen_books() %>%
   unnest_tokens(bigram, text, token = "ngrams", n = 2)
@@ -110,6 +111,7 @@ negated_words <- bigrams_separated %>%
   inner_join(AFINN, by = c(word2 = "word")) %>%
   count(word1, word2, value, sort = TRUE)
 
+# The plots are fewer than expected. Exploration?
 negated_words %>%
   mutate(contribution = n * value) %>%
   arrange(desc(abs(contribution))) %>%
@@ -119,6 +121,6 @@ negated_words %>%
   geom_col(show.legend = FALSE) +
   xlab("Words preceded by negative words") +
   ylab("Sentiment value * number of occurrences") +
-  facet_wrap(~word1, scales = "free")+
+  facet_wrap(~word1, scales = "free") +
   coord_flip()
 
