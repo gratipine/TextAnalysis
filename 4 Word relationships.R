@@ -8,7 +8,7 @@ austen_bigrams <- austen_books() %>%
   unnest_tokens(bigram, text, token = "ngrams", n = 2)
 
 # Counting and filtering n-grams --------------------
-# Contians exactly the not useful stuff, at least at the top
+# Contains exactly the not useful stuff, at least at the top
 austen_bigrams %>%
   count(bigram, sort = TRUE)
 
@@ -40,7 +40,6 @@ austen_books() %>%
   count(word1, word2, word3, sort = TRUE)
 
 # Was Cathering De Bourgh? It sounds better as Debourgh.
-# Also, they sure like talking about money.
 
 # Analysing the bigrams ---------------
 
