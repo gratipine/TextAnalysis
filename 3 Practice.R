@@ -109,12 +109,12 @@ book_words %>%
   facet_wrap(~gutenberg_id, ncol = 2, scales = "free") +
   coord_flip()
 
-# We do have some words in the Tommu and Tuppence book that we shouldn't have
+# We do have some words in the Tommy and Tuppence book that we shouldn't have
 # Some clean up required
 
 # Fast fix for the encoding problem
 book_words <- book_words[-grep(
-  "dat2", iconv(book_words$word, "latin1", "ASCII", sub="dat2")),]
+  "dat2", iconv(book_words$word, "latin1", "ASCII", sub = "dat2")),]
 
 
 book_words %>%

@@ -142,15 +142,14 @@ ggraph(bigram_graph, layout = "fr") +
   geom_node_text(aes(label = name), vjust = 1, hjust = 1)
 
 set.seed(2016)
-
 a <- grid::arrow(type = "closed", length = unit(.15, "inches"))
 
 ggraph(bigram_graph, layout = "fr") +
   geom_edge_link(aes(edge_alpha = n), show.legend = FALSE,
                  arrow = a, end_cap = circle(.07, 'inches')) +
   geom_node_point(color = "lightblue", size = 5) +
-  geom_node_text(aes(label = name), vjust = 1, hjust = 1) +
-  theme_void()
+  geom_node_text(aes(label = name), vjust = 1, hjust = 1)
+
 
 # Visualizing bigrams in other texts --------------------------------------
 library(dplyr)
@@ -183,7 +182,10 @@ visualize_bigrams <- function(bigrams) {
     # theme_void()
 }
 
+
+# Download the king James bible and check what that looks like
 library(gutenbergr)
+
 kjv <- gutenberg_download(10)
 
 library(stringr)
@@ -221,8 +223,8 @@ word_pairs %>%
 
 # Pairwise correlation --------
 # while Darcy and Eilzabeth occur together very often, theeffect is spoiled by 
-# the fact that those two words are often together. To combat the skewing of 
-# that, we calculate the correlation instead.
+# the fact that those two words are very common in general. 
+# To combat the skewing of that, we calculate the correlation instead.
 
 # Here it is done using the phi coefficient (have a google).
 
