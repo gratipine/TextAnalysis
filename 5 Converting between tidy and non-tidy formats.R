@@ -110,6 +110,8 @@ austen_dtm
 data("acq")
 acq[[1]]
 
+
+
 acq_td <- tidy(acq)
 
 # Tokenize to find out most common words, for example
@@ -130,6 +132,9 @@ acq_tokens %>%
 
 
 # Example - mining financial articles -------------------------------
+# Need to fix this part, it does not work
+# Alternatively, find something else that pulls stock data for free and this 
+# easily
 library(tm.plugin.webmining)
 library(purrr)
 
